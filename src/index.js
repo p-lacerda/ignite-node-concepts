@@ -15,7 +15,20 @@ function checksExistsUserAccount(request, response, next) {
 }
 
 app.post('/users', (request, response) => {
-  // Complete aqui
+  const { name, username } = request.body;
+
+  if (!name || !username) {
+    return response.status(400).json({ error: 'Name or username is missing' });
+  }
+
+  const user = {
+    id: uuidv4(),
+    name,
+    username,
+    todos: []
+  }
+
+  return response.json(user);
 });
 
 app.get('/todos', checksExistsUserAccount, (request, response) => {
